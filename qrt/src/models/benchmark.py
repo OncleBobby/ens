@@ -16,6 +16,7 @@ class Benchmark2(Model):
   def __init__(self, X_train, y_train, X_valid, y_valid, train_scores):
     Model.__init__(self, X_train, y_train, X_valid, y_valid, train_scores)    
     self.model = None
+
   def train(self):
     params_1 = {
         'booster': 'gbtree',
@@ -26,7 +27,6 @@ class Benchmark2(Model):
         'num_class': 2,
         'eval_metric':'mlogloss'
         }
-
     d_train = xgboost.DMatrix(self.X_train.replace({0:numpy.nan}), self.y_train)
     d_valid = xgboost.DMatrix(self.X_valid.replace({0:numpy.nan}), self.y_valid)
 
@@ -34,10 +34,8 @@ class Benchmark2(Model):
     evallist = [(d_train, 'train'), (d_valid, 'eval')]
     self.model = xgboost.train(params_1, d_train, num_round, evallist, early_stopping_rounds=100)
   def predict(self, X):
-    predictions = self.model.predict(xgboost.DMatrix(X), iteration_range=(0, self.model.best_iteration))
-    predictions = pandas.DataFrame(predictions)
-
+    predictions = pandas.DataFrame(self.model.predict(xgboost.DMatrix(X), iteration_range=(0, self.model.best_iteration)))
     predictions[2] = 0
     predictions.columns = [0,2,1]
     predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
-    return predictions
+    return pandas.DataFrame(predictions)
