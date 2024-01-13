@@ -24,4 +24,4 @@ class Model:
     predictions.index = X.index
     submission = predictions.reset_index()
     print(f'submission={submission}')
-    submission.to_csv(f'./{self.name}_submission.csv', index=False)    
+    submission.to_csv(f'../data/predictions/{self.name}_submission.csv', index=False)    
