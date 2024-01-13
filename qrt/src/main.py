@@ -27,10 +27,11 @@ def get_score(predictions, target):
     predictions.columns = [0,2,1]
     predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
     return numpy.round(accuracy_score(predictions,target),4)
-def get_train_test(train_size=0.8, random_state=42):
+def get_train_test(feature='AWAY_WINS', train_size=0.8, random_state=42):
     train_data = get_X('train')
     train_scores = get_y()
-    train_new_y = train_scores['AWAY_WINS']
+    train_new_y = train_scores[feature]
     X_train, X_test, y_train, y_test = model_selection.train_test_split(train_data, train_new_y, train_size=train_size, random_state=random_state)
     X_train, X_valid, y_train, y_valid = model_selection.train_test_split(X_train, y_train, train_size=train_size, random_state=random_state)
-    return X_train, y_train, X_test, y_test, X_valid, y_valid
+    target = train_scores.loc[X_test.index].copy()
+    return X_train, y_train, X_test, y_test, X_valid, y_valid, target

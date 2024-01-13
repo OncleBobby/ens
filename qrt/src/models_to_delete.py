@@ -1,5 +1,10 @@
 import xgboost, numpy, matplotlib.pyplot as pyplot
-def get_model_default(X_train, y_train, X_valid, y_valid):
+def get_model_benchmark1(X_train, y_train, X_valid, y_valid, target):
+    home_wins = target
+    home_wins = 0 * home_wins
+    home_wins.iloc[:,0] = 1
+    return home_wins
+def get_model_benchmark2(X_train, y_train, X_valid, y_valid, target):
     params_1 = {
         'booster': 'gbtree',
         'tree_method':'hist',
