@@ -22,11 +22,6 @@ def get_y():
     train_scores = pandas.read_csv('../data/Y_train_1rknArQ.csv', index_col=0)
     train_scores = train_scores.loc[train_data.index]
     return train_scores
-def get_score(predictions, target):
-    predictions[2] = 0
-    predictions.columns = [0,2,1]
-    predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
-    return numpy.round(accuracy_score(predictions,target),4)
 def get_train_test(feature='AWAY_WINS', train_size=0.8, random_state=42):
     train_data = get_X('train')
     train_scores = get_y()
