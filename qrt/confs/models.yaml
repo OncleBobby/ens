@@ -1,6 +1,6 @@
 
-benchmark2:
-  class: models.benchmark.Benchmark2
+benchmark:
+  class: models.xgboost_model.XgboostModel
   params:
     booster: gbtree
     tree_method: hist
@@ -9,8 +9,8 @@ benchmark2:
     objective: "multi:softprob"
     num_class: 2
     eval_metric: mlogloss
-benchmark3:
-  class: models.benchmark.Benchmark2
+xgb_gblinear:
+  class: models.xgboost_model.XgboostModel
   params:
     booster: gblinear
     tree_method: hist

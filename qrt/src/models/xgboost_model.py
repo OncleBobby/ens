@@ -1,18 +1,8 @@
 import pandas
 from .model import Model
 
-class Benchmark1(Model):
-  def __init__(self, X_train, y_train, X_valid, y_valid, train_scores):
-    Model.__init__(self, X_train, y_train, X_valid, y_valid, train_scores)    
-  def predict(self, X):
-    target = self.train_scores.loc[X.index].copy()
-    home_wins = target
-    home_wins = 0 * home_wins
-    home_wins.iloc[:,0] = 1
-    return home_wins
-
 import xgboost, numpy
-class Benchmark2(Model):
+class XgboostModel(Model):
   def __init__(self, X_train, y_train, X_valid, y_valid, train_scores, \
         params={
           'booster': 'gbtree',
