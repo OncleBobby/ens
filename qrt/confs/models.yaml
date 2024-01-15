@@ -19,3 +19,7 @@ xgb_gblinear:
     objective: "multi:softprob"
     num_class: 2
     eval_metric: mlogloss
+random_forest:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.ensemble.RandomForestClassifier
