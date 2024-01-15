@@ -1,9 +1,9 @@
-import pandas
+import pandas, xgboost, numpy
+from sklearn import model_selection
 from .model import Model
 
-import xgboost, numpy
 class XgboostModel(Model):
-  def __init__(self, X_train, y_train, X_valid, y_valid, train_scores, \
+  def __init__(self, X_train, y_train, train_scores, \
         params={
           'booster': 'gbtree',
           'tree_method':'hist',
@@ -13,13 +13,17 @@ class XgboostModel(Model):
           'num_class': 2,
           'eval_metric':'mlogloss'
         }):
-    Model.__init__(self, X_train, y_train, X_valid, y_valid, train_scores, params)
+    Model.__init__(self, X_train, y_train, train_scores, params)
     self.model = None    
   def train(self):
-    d_train = xgboost.DMatrix(self.X_train.replace({0:numpy.nan}), self.y_train)
-    d_valid = xgboost.DMatrix(self.X_valid.replace({0:numpy.nan}), self.y_valid)
-
+    train_size=0.8
+    random_state=42
     num_round = 10000
+    X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, self.y_train, train_size=train_size, random_state=random_state)
+
+    d_train = xgboost.DMatrix(X_train.replace({0:numpy.nan}), y_train)
+    d_valid = xgboost.DMatrix(X_valid.replace({0:numpy.nan}), y_valid)
+
     evallist = [(d_train, 'train'), (d_valid, 'eval')]
     self.model = xgboost.train(self.params, d_train, num_round, evallist, early_stopping_rounds=100, verbose_eval=0)
   def predict(self, X):

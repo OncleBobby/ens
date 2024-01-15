@@ -1,5 +1,4 @@
 import pandas, numpy
-from sklearn.metrics import accuracy_score
 from sklearn import model_selection
 
 def read_statistics(name, type):
@@ -7,14 +6,11 @@ def read_statistics(name, type):
 def get_X(name):
     home_team = read_statistics('home_team', name)
     away_team = read_statistics('away_team', name)
-
     if name == 'train':
         home_team = home_team.iloc[:,2:]
         away_team = away_team.iloc[:,2:]
-
     home_team.columns = 'HOME_' + home_team.columns
     away_team.columns = 'AWAY_' + away_team.columns
-
     data =  pandas.concat([home_team, away_team],join='inner',axis=1)
     return data.replace({numpy.inf:numpy.nan, -numpy.inf:numpy.nan})
 def get_y():
@@ -27,6 +23,5 @@ def get_train_test(feature='AWAY_WINS', train_size=0.8, random_state=42):
     train_scores = get_y()
     train_new_y = train_scores[feature]
     X_train, X_test, y_train, y_test = model_selection.train_test_split(train_data, train_new_y, train_size=train_size, random_state=random_state)
-    X_train, X_valid, y_train, y_valid = model_selection.train_test_split(X_train, y_train, train_size=train_size, random_state=random_state)
     target = train_scores.loc[X_test.index].copy()
-    return X_train, y_train, X_test, y_test, X_valid, y_valid, target
+    return X_train, y_train, X_test, y_test, target
