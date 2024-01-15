@@ -20,7 +20,6 @@ class XgboostModel(Model):
     random_state=42
     num_round = 10000
     X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, self.y_train, train_size=train_size, random_state=random_state)
-
     d_train = xgboost.DMatrix(X_train.replace({0:numpy.nan}), y_train)
     d_valid = xgboost.DMatrix(X_valid.replace({0:numpy.nan}), y_valid)
 
