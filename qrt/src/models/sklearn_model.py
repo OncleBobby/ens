@@ -1,8 +1,5 @@
-import pandas, xgboost, numpy
+import pandas, numpy
 from importlib import import_module
-from sklearn import model_selection
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
 from .model import Model
 
 class SklearnModel(Model):

@@ -21,4 +21,4 @@ class Model:
     predictions.columns = ['HOME_WINS', 'DRAW', 'AWAY_WINS']
     predictions.index = X.index
     submission = predictions.reset_index()
-    submission.to_csv(f'../data/predictions/{self.name}_submission.csv', index=False)    
+    submission.to_csv(f'../data/predictions/{self.name}.csv', index=False)    
