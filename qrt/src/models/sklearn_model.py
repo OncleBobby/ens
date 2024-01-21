@@ -12,8 +12,7 @@ class SklearnModel(Model):
     self.model.fit(self.X_train, y_train)
   def predict(self, X):
     predictions = pandas.DataFrame(self.model.predict_proba(X.replace({numpy.nan:0})))
-    predictions[2] = 0
-    predictions.columns = [0,2,1]
+    predictions.columns = [0,1,2]
     predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
     return pandas.DataFrame(predictions)
   def _get_model(self):
@@ -24,4 +23,6 @@ class SklearnModel(Model):
     module = import_module(module_path)
     return getattr(module, class_name)()
   def _format_y(self, y):
-    return y['AWAY_WINS']
+    z = y.copy()
+    z['target'] = (z['HOME_WINS'] * 0 + z['DRAW'] * 1 + z['AWAY_WINS'] * 2).astype('category')
+    return z['target']
