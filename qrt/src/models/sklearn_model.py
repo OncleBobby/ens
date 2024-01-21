@@ -8,7 +8,8 @@ class SklearnModel(Model):
     self.model = None    
   def train(self):
     self.model = self._get_model()
-    self.model.fit(self.X_train, self.y_train)
+    y_train = self._format_y(self.y_train)
+    self.model.fit(self.X_train, y_train)
   def predict(self, X):
     predictions = pandas.DataFrame(self.model.predict_proba(X.replace({numpy.nan:0})))
     predictions[2] = 0
@@ -22,4 +23,5 @@ class SklearnModel(Model):
     class_name = s[-1]
     module = import_module(module_path)
     return getattr(module, class_name)()
-
+  def _format_y(self, y):
+    return y['AWAY_WINS']

@@ -19,7 +19,8 @@ class XgboostModel(Model):
     train_size=0.8
     random_state=42
     num_round = 10000
-    X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, self.y_train, train_size=train_size, random_state=random_state)
+    y_train = self._format_y(self.y_train)
+    X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, y_train, train_size=train_size, random_state=random_state)
     d_train = xgboost.DMatrix(X_train.replace({0:numpy.nan}), y_train)
     d_valid = xgboost.DMatrix(X_valid.replace({0:numpy.nan}), y_valid)
 
@@ -31,3 +32,5 @@ class XgboostModel(Model):
     predictions.columns = [0,2,1]
     predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
     return pandas.DataFrame(predictions)
+  def _format_y(self, y):
+    return y['AWAY_WINS']
