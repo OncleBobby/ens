@@ -20,8 +20,5 @@ class KerasModel(Model):
     history = self.model.fit(X_train, y_train, validation_data=(X_valid, y_valid), batch_size = 10, epochs = 100, verbose=0)
   def predict(self, X):
     predictions = pandas.DataFrame(self.model.predict(X))
-    print(f'predictions={predictions.head(10)}')
-    # predictions.columns = [0,1,2]
     predictions = pandas.DataFrame((predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values)
-    # print(f'predictions={predictions.head(10)}')
     return predictions
