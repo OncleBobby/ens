@@ -9,13 +9,13 @@ class KerasModel(Model):
   def train(self):
     train_size=0.8
     random_state=42
-    num_round = 10000
     activation_name=self.params['activation_name']
     X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, self.y_train, train_size=train_size, random_state=random_state)
     inputs = keras.Input(shape=self.X_train.shape[1])
-    hidden_layer = keras.layers.Dense(20, activation=activation_name)(inputs)
-    output_layer = keras.layers.Dense(3, activation="softmax")(hidden_layer)
-    self.model = keras.Model(inputs=inputs, outputs=output_layer)
+    layer = keras.layers.Dense(20, activation=activation_name)(inputs)
+    layer = keras.layers.Dense(3, activation="sigmoid")(layer)
+    # layer = keras.layers.Dense(3, activation="softmax")(layer)
+    self.model = keras.Model(inputs=inputs, outputs=layer)
     self.model.compile(optimizer='adam', loss=keras.losses.CategoricalCrossentropy())
     history = self.model.fit(X_train, y_train, validation_data=(X_valid, y_valid), batch_size = 10, epochs = 100, verbose=0)
   def predict(self, X):
