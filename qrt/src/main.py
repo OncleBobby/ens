@@ -12,21 +12,23 @@ def evalute_models(X_train, y_train, X_test):
     with open('qrt/confs/models.yaml', 'r') as file:
         configurations = yaml.safe_load(file)
     factory = ModelFactory(configurations, X_train, y_train, train_scores)
+    models = factory.get_models()
     lines = []
-    for model in factory.get_models():
+    i = 0
+    nbr = len(models)
+    for model in models:
+        i = i+1
         model.train()
-        lines.append(eval_model(model, save_model))
+        start = time.time()
+        model.train()
+        score = model.evaluate(X_test)
+        end = time.time()
+        logging.info(f'{model.name}={score} in {numpy.round((end-start), 2)}s ({i}/{nbr})')
+        if save_model:
+            model.save(test_data, root_path)
+        lines.append({'name': model.name, 'score': score, 'time': numpy.round((end-start), 2)})
     df = pandas.DataFrame(lines)
     df = df.sort_values(by=['score'], ascending=False)
-def eval_model(model, save_model=False):
-    start = time.time()
-    model.train()
-    score = model.evaluate(X_test)
-    end = time.time()
-    logging.info(f'{model.name}={score} in {numpy.round((end-start), 2)}s')
-    if save_model:
-        model.save(test_data, root_path)
-    return {'name': model.name, 'score': score, 'time': numpy.round((end-start), 2)}
 
 data_access.root_path = root_path
 feature=['HOME_WINS', 'DRAW', 'AWAY_WINS']

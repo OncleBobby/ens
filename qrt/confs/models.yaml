@@ -1,23 +1,23 @@
-benchmark1:
-  class: models.benchmark_model.BenchmarkModel
-  params:
-    booster: gbtree
-    tree_method: hist
-    max_depth: 8 
-    learning_rate: 0.025
-    objective: "multi:softprob"
-    num_class: 2
-    eval_metric: mlogloss
-benchmark2:
-  class: models.benchmark_model.BenchmarkModel
-  params:
-    booster: gblinear
-    tree_method: hist
-    max_depth: 8 
-    learning_rate: 0.025
-    objective: "multi:softprob"
-    num_class: 2
-    eval_metric: mlogloss
+# benchmark1:
+#   class: models.benchmark_model.BenchmarkModel
+#   params:
+#     booster: gbtree
+#     tree_method: hist
+#     max_depth: 8 
+#     learning_rate: 0.025
+#     objective: "multi:softprob"
+#     num_class: 2
+#     eval_metric: mlogloss
+# benchmark2:
+#   class: models.benchmark_model.BenchmarkModel
+#   params:
+#     booster: gblinear
+#     tree_method: hist
+#     max_depth: 8 
+#     learning_rate: 0.025
+#     objective: "multi:softprob"
+#     num_class: 2
+#     eval_metric: mlogloss
 xgb_gblinear:
   class: models.xgboost_model.XgboostModel
   params:
@@ -28,6 +28,11 @@ xgb_gblinear:
     objective: "multi:softprob"
     num_class: 2
     eval_metric: mlogloss
+catboost:
+  class: models.catboost_model.CatBoostModel
+  params:
+    iterations: 1000
+    devices: '0:1'
 dummy:
   class: models.sklearn_model.SklearnModel
   params:
@@ -36,39 +41,61 @@ random_forest:
   class: models.sklearn_model.SklearnModel
   params:
     class_name: sklearn.ensemble.RandomForestClassifier
-gradient_boosting:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.ensemble.GradientBoostingClassifier
-ada_boost:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.ensemble.AdaBoostClassifier
-bagging:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.ensemble.BaggingClassifier
-extra_trees:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.ensemble.ExtraTreesClassifier
-decision_tree:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.tree.DecisionTreeClassifier
-hist_gradient_boosting:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.ensemble.HistGradientBoostingClassifier
-mlp:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.neural_network.MLPClassifier
-kneighbors:
-  class: models.sklearn_model.SklearnModel
-  params:
-    class_name: sklearn.neighbors.KNeighborsClassifier
-keras:
+# gradient_boosting:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.ensemble.GradientBoostingClassifier
+# ada_boost:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.ensemble.AdaBoostClassifier
+# bagging:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.ensemble.BaggingClassifier
+# extra_trees:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.ensemble.ExtraTreesClassifier
+# decision_tree:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.tree.DecisionTreeClassifier
+# hist_gradient_boosting:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.ensemble.HistGradientBoostingClassifier
+# mlp:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.neural_network.MLPClassifier
+# kneighbors:
+#   class: models.sklearn_model.SklearnModel
+#   params:
+#     class_name: sklearn.neighbors.KNeighborsClassifier
+keras_relu:
   class: models.keras_model.KerasModel
   params:
     activation_name: relu
+# keras_relu6:
+#   class: models.keras_model.KerasModel
+#   params:
+#     activation_name: relu6
+# keras_log_softmax:
+#   class: models.keras_model.KerasModel
+#   params:
+#     activation_name: log_softmax
+# sigmoid
+# softmax
+# softplus
+# softsign
+# selu
+# tanh
+# elu
+# exponential
+# leaky_relu
+# silu
+# gelu
+# hard_sigmoid
+# linear
+# mish
