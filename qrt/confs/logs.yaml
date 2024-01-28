@@ -25,6 +25,8 @@ loggers:
     level: INFO
   py.warnings:
     level: ERROR
+  tensorflow:
+    level: ERROR
 root:
   handlers: [console, info_file_handler]
   level: INFO

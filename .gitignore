@@ -162,7 +162,6 @@ qrt/data/*.zip
 qrt/data/*.csv
 qrt/data/*/*.csv
 qrt/notebooks/*.csv
-qrt/src/models/catboost_model.py
 qrt/notebooks/catboost_info/learn_error.tsv
 qrt/notebooks/catboost_info/learn/events.out.tfevents
 qrt/notebooks/catboost_info/time_left.tsv
