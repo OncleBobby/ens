@@ -15,7 +15,7 @@ class XgboostModel(Model):
         }):
     Model.__init__(self, X_train, y_train, train_scores, params)
     self.model = None    
-  def train(self):
+  def fit(self):
     train_size=0.8
     random_state=42
     num_round = 10000

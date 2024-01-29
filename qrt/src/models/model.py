@@ -8,7 +8,7 @@ class Model:
     self.train_scores = train_scores
     self.params = params
     self.name = self.__class__.__name__
-  def train(self):
+  def fit(self):
     pass
   def predict(self, X):
      pass

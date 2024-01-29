@@ -6,7 +6,7 @@ class CatBoostModel(Model):
   def __init__(self, X_train, y_train, train_scores, params={}):
     Model.__init__(self, X_train, y_train, train_scores, params)
     self.model = None    
-  def train(self):
+  def fit(self):
     iterations = self.params['iterations'] if 'iterations' in self.params else 1000
     devices = self.params['devices'] if 'devices' in self.params else '0:1'
     X_train = self._format_x(self.X_train)

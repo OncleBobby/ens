@@ -18,9 +18,8 @@ def evalute_models(X_train, y_train, X_test):
     nbr = len(models)
     for model in models:
         i = i+1
-        model.train()
         start = time.time()
-        model.train()
+        model.fit()
         score = model.evaluate(X_test)
         end = time.time()
         logging.info(f'{model.name}={score} in {numpy.round((end-start), 2)}s ({i}/{nbr})')

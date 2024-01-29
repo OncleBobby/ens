@@ -6,7 +6,7 @@ class KerasModel(Model):
   def __init__(self, X_train, y_train, train_scores, params={}):
     Model.__init__(self, X_train.replace({numpy.nan:0}), y_train, train_scores, params)
     self.model = None    
-  def train(self):
+  def fit(self):
     train_size=0.8
     random_state=42
     activation_name=self.params['activation_name']

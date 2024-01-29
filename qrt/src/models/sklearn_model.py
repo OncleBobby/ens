@@ -6,7 +6,7 @@ class SklearnModel(Model):
   def __init__(self, X_train, y_train, train_scores, params={}):
     Model.__init__(self, X_train.replace({numpy.nan:0}), y_train, train_scores, params)
     self.model = None    
-  def train(self):
+  def fit(self):
     self.model = self._get_model()
     y_train = self._format_y(self.y_train)
     self.model.fit(self.X_train, y_train)
