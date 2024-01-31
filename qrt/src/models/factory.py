@@ -6,8 +6,9 @@ class ModelFactory():
     self.X_train = X_train
     self.y_train = y_train
     self.train_scores = train_scores
-  def get_model(self, name):
-    configuration = self.configurations[name]
+  def get_model(self, name, configuration = None):
+    if configuration is None:
+      configuration = self.configurations[name]
     class_str = configuration['class']
     params = configuration['params']
     module_path, class_name = class_str.rsplit('.', 1)
