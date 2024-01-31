@@ -21,4 +21,10 @@ class Model:
     predictions.columns = ['HOME_WINS', 'DRAW', 'AWAY_WINS']
     predictions.index = X.index
     submission = predictions.reset_index()
-    submission.to_csv(f'{root_path}/data/predictions/{self.name}.csv', index=False)    
+    submission.to_csv(f'{root_path}/data/predictions/{self.name}.csv', index=False)
+  def format_x(self, x):
+    return x.replace({0:numpy.nan})
+  def format_y(self, y):
+    z = y.copy()
+    z['target'] = (z['HOME_WINS'] * 0 + z['DRAW'] * 1 + z['AWAY_WINS'] * 2).astype('category')
+    return z['target']
