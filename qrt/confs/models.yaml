@@ -41,30 +41,30 @@ random_forest:
   class: models.sklearn_model.SklearnModel
   params:
     class_name: sklearn.ensemble.RandomForestClassifier
-# gradient_boosting:
-#   class: models.sklearn_model.SklearnModel
-#   params:
-#     class_name: sklearn.ensemble.GradientBoostingClassifier
-# ada_boost:
-#   class: models.sklearn_model.SklearnModel
-#   params:
-#     class_name: sklearn.ensemble.AdaBoostClassifier
+gradient_boosting:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.ensemble.GradientBoostingClassifier
+ada_boost:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.ensemble.AdaBoostClassifier
 # bagging:
 #   class: models.sklearn_model.SklearnModel
 #   params:
 #     class_name: sklearn.ensemble.BaggingClassifier
-# extra_trees:
-#   class: models.sklearn_model.SklearnModel
-#   params:
-#     class_name: sklearn.ensemble.ExtraTreesClassifier
+extra_trees:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.ensemble.ExtraTreesClassifier
 # decision_tree:
 #   class: models.sklearn_model.SklearnModel
 #   params:
 #     class_name: sklearn.tree.DecisionTreeClassifier
-# hist_gradient_boosting:
-#   class: models.sklearn_model.SklearnModel
-#   params:
-#     class_name: sklearn.ensemble.HistGradientBoostingClassifier
+hist_gradient_boosting:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.ensemble.HistGradientBoostingClassifier
 # mlp:
 #   class: models.sklearn_model.SklearnModel
 #   params:
@@ -76,6 +76,9 @@ random_forest:
 keras_relu:
   class: models.keras_model.KerasModel
   params:
+    layers:
+      - {'activation': 'relu', 'units': 10}
+      - {'activation': 'relu', 'units': 10}
     activation_name: relu
 # keras_relu6:
 #   class: models.keras_model.KerasModel

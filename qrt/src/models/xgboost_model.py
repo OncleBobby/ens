@@ -1,4 +1,4 @@
-import pandas, xgboost, numpy
+import pandas, xgboost, logging
 from sklearn import model_selection
 from .model import Model
 

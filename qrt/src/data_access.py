@@ -32,8 +32,10 @@ def get_X_1(name):
 def get_X_2(name):
     home_team = read_statistics('home_team', name).replace({numpy.inf:numpy.nan, -numpy.inf:numpy.nan})
     away_team = read_statistics('away_team', name).replace({numpy.inf:numpy.nan, -numpy.inf:numpy.nan})
-    if name == 'train':
-        home_team = home_team.iloc[:,2:]
-        away_team = away_team.iloc[:,2:]
+    columns = list(home_team.columns)
+    if 'LEAGUE' in columns: columns.remove('LEAGUE')
+    if 'TEAM_NAME' in columns: columns.remove('TEAM_NAME')
+    home_team = home_team[columns]
+    away_team = away_team[columns]
     data =  home_team.iloc[:,2:] + away_team.iloc[:,2:] * -1
     return data
