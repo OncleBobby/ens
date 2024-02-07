@@ -1,25 +1,15 @@
-# benchmark1:
-#   class: models.benchmark_model.BenchmarkModel
-#   params:
-#     booster: gbtree
-#     tree_method: hist
-#     max_depth: 8 
-#     learning_rate: 0.025
-#     objective: "multi:softprob"
-#     num_class: 2
-#     eval_metric: mlogloss
-# benchmark2:
-#   class: models.benchmark_model.BenchmarkModel
-#   params:
-#     booster: gblinear
-#     tree_method: hist
-#     max_depth: 8 
-#     learning_rate: 0.025
-#     objective: "multi:softprob"
-#     num_class: 2
-#     eval_metric: mlogloss
 xgb_gblinear:
   class: models.xgboost_model.XgboostModel
+  params:
+    booster: gblinear
+    tree_method: hist
+    max_depth: 8 
+    learning_rate: 0.025
+    objective: "multi:softprob"
+    num_class: 2
+    eval_metric: mlogloss
+xgb_classifier:
+  class: models.xgboost_classifier_model.XgboostClassifierModel
   params:
     booster: gblinear
     tree_method: hist
@@ -73,21 +63,35 @@ hist_gradient_boosting:
 #   class: models.sklearn_model.SklearnModel
 #   params:
 #     class_name: sklearn.neighbors.KNeighborsClassifier
-keras_relu:
+lightgbm:
+  class: models.lightgbm_model.LightgbmModel
+  params:
+    learning_rate: 0.05
+    max_depth: -5
+    random_state: 42
+    eval_metric: mlogloss
+keras_relu_1:
   class: models.keras_model.KerasModel
   params:
     layers:
       - {'activation': 'relu', 'units': 10}
-      - {'activation': 'relu', 'units': 10}
-    activation_name: relu
-# keras_relu6:
-#   class: models.keras_model.KerasModel
-#   params:
-#     activation_name: relu6
-# keras_log_softmax:
-#   class: models.keras_model.KerasModel
-#   params:
-#     activation_name: log_softmax
+keras_relu_13:
+  class: models.keras_model.KerasModel
+  params:
+    layers:
+      - {'activation': 'relu', 'units': 15}
+keras_relu_15:
+  class: models.keras_model.KerasModel
+  params:
+    layers:
+      - {'activation': 'sigmoid', 'units': 15}
+      - {'activation': 'relu', 'units': 15}
+      - {'activation': 'relu', 'units': 15}
+      - {'activation': 'softmax', 'units': 15}
+      - {'activation': 'relu', 'units': 15}
+      - {'activation': 'relu', 'units': 15}
+      - {'activation': 'relu', 'units': 15}
+
 # sigmoid
 # softmax
 # softplus
