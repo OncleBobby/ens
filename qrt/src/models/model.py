@@ -1,4 +1,4 @@
-import numpy
+import numpy, logging
 from sklearn.metrics import accuracy_score
 
 class Model:
@@ -22,6 +22,9 @@ class Model:
     predictions.index = X.index
     submission = predictions.reset_index()
     submission.to_csv(f'{root_path}/data/predictions/{self.name}.csv', index=False)
+  def get_feature_importances(self):
+    logging.info(f'Model.get_feature_importances ....')
+    pass
   def format_x(self, x):
     return x.replace({0:numpy.nan})
   def format_y(self, y):

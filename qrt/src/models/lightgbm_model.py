@@ -1,0 +1,29 @@
+import pandas, lightgbm, logging
+from sklearn import model_selection
+from .model import Model
+
+class LightgbmModel(Model):
+  def __init__(self, X_train, y_train, train_scores, params):
+    Model.__init__(self, X_train, y_train, train_scores, params)
+    self.model = None    
+  def fit(self):
+    params = self.params.copy()
+    train_size=0.8
+    random_state=42
+    y_train = self.format_y(self.y_train)
+    X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, y_train, train_size=train_size, random_state=random_state)
+    eval_set = [(X_valid, y_valid),(X_train, y_train)]
+    self.model = lightgbm.LGBMClassifier(learning_rate=params['learning_rate'], 
+                      max_depth=params['max_depth'], random_state=params['random_state'])
+    self.model.fit(X_train, y_train, eval_set=eval_set, eval_metric=params['eval_metric'])
+  def predict(self, X):
+    predictions = pandas.DataFrame(self.model.predict_proba(self.format_x(X)))
+    predictions.columns = [0,1,2]
+    predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
+    return pandas.DataFrame(predictions)
+  def get_feature_importances(self):
+    logging.info(f'SklearnModel.get_feature_importances ....')
+    feature_names = [self.X_train.columns[i] for i in range(self.X_train.shape[1])]
+    df_importances = pandas.DataFrame({'feature': feature_names, 'importance': self.model.feature_importances_})
+    return df_importances.sort_values(by=['importance'], ascending=False)
+  
