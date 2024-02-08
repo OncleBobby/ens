@@ -1,11 +1,14 @@
-import pandas, lightgbm, logging
+import pandas, lightgbm, logging, numpy
 from sklearn import model_selection
 from .model import Model
 
 class LightgbmModel(Model):
   def __init__(self, X_train, y_train, train_scores, params):
-    Model.__init__(self, X_train, y_train, train_scores, params)
-    self.model = None    
+    Model.__init__(self, X_train.replace({numpy.nan:0}), y_train, train_scores, params)
+    self.model = None
+  def get_model(self):
+    params = self.params.copy()
+    return lightgbm.LGBMClassifier(**params)
   def fit(self):
     params = self.params.copy()
     train_size=0.8
@@ -13,9 +16,10 @@ class LightgbmModel(Model):
     y_train = self.format_y(self.y_train)
     X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, y_train, train_size=train_size, random_state=random_state)
     eval_set = [(X_valid, y_valid),(X_train, y_train)]
-    self.model = lightgbm.LGBMClassifier(learning_rate=params['learning_rate'], 
-                      max_depth=params['max_depth'], random_state=params['random_state'])
-    self.model.fit(X_train, y_train, eval_set=eval_set, eval_metric=params['eval_metric'])
+    # self.model = self.get_model()
+    # self.model.fit(X_train, y_train, eval_set=eval_set, eval_metric=params['eval_metric'])
+    self.model = lightgbm.LGBMClassifier()
+    self.model.fit(X_train, y_train)
   def predict(self, X):
     predictions = pandas.DataFrame(self.model.predict_proba(self.format_x(X)))
     predictions.columns = [0,1,2]
