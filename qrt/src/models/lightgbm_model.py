@@ -16,10 +16,8 @@ class LightgbmModel(Model):
     y_train = self.format_y(self.y_train)
     X_train, X_valid, y_train, y_valid = model_selection.train_test_split(self.X_train, y_train, train_size=train_size, random_state=random_state)
     eval_set = [(X_valid, y_valid),(X_train, y_train)]
-    # self.model = self.get_model()
-    # self.model.fit(X_train, y_train, eval_set=eval_set, eval_metric=params['eval_metric'])
-    self.model = lightgbm.LGBMClassifier()
-    self.model.fit(X_train, y_train)
+    self.model = self.get_model()
+    self.model.fit(X_train, y_train, eval_set=eval_set)
   def predict(self, X):
     predictions = pandas.DataFrame(self.model.predict_proba(self.format_x(X)))
     predictions.columns = [0,1,2]
