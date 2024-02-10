@@ -15,9 +15,9 @@ class XgboostClassifierModel(Model):
         }):
     Model.__init__(self, X_train, y_train, train_scores, params)
     self.model = None    
-  def fit(self):
+  def get_model(self):
     params = self.params.copy()
-    self.model = xgboost.XGBClassifier(
+    return xgboost.XGBClassifier(
         booster=params['booster'],
         tree_method=params['tree_method'],
         max_depth=params['max_depth'],    
@@ -26,6 +26,8 @@ class XgboostClassifierModel(Model):
         num_class=params['num_class'],
         eval_metric=params['eval_metric']
     )
+  def fit(self):
+    self.model = self.get_model()
     self.model.fit(self.X_train, self.format_y(self.y_train))
   def predict(self, X):
     predictions = pandas.DataFrame(self.model.predict_proba(self.format_x(X)))
