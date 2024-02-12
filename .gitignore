@@ -162,12 +162,6 @@ qrt/data/*.zip
 qrt/data/*.csv
 qrt/data/*/*.csv
 qrt/notebooks/*.csv
-qrt/notebooks/catboost_info/learn_error.tsv
-qrt/notebooks/catboost_info/learn/events.out.tfevents
-qrt/notebooks/catboost_info/time_left.tsv
-qrt/notebooks/catboost_info/catboost_training.json
-catboost_info/learn/events.out.tfevents
-catboost_info/time_left.tsv
-catboost_info/learn_error.tsv
-catboost_info/catboost_training.json
+qrt/notebooks/catboost_info/*
+catboost_info/*
 qrt/notebooks/catboost_info/tmp/*

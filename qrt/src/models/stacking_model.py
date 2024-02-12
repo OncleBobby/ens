@@ -18,5 +18,4 @@ class StackingModel(Model):
     return pandas.DataFrame(predictions)
   def get_model(self):
     estimators = [(name, estimator.get_model()) for name, estimator in self.params['estimators'].items()]
-    print(f'estimators={estimators}')
     return sklearn.ensemble.StackingClassifier(estimators = estimators)
