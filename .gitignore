@@ -165,3 +165,5 @@ qrt/notebooks/*.csv
 qrt/notebooks/catboost_info/*
 catboost_info/*
 qrt/notebooks/catboost_info/tmp/*
+qrt/data/mix/test/*.csv
+qrt/data/mix/train/*.csv

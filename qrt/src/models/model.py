@@ -1,4 +1,4 @@
-import numpy, logging
+import numpy, logging, pandas
 from sklearn.metrics import accuracy_score
 
 class Model:
@@ -12,21 +12,29 @@ class Model:
     pass
   def predict(self, X):
      pass
+  def predict_proba(self, X):
+    return pandas.DataFrame(self.model.predict_proba(self.format_x(X)))  
   def evaluate(self, X):
     predictions = self.predict(X)
     target = self.train_scores.loc[X.index].copy()
     return numpy.round(accuracy_score(predictions, target), 4)
-  def save(self, X, root_path='..'):
+  def save(self, X, root_path='../data/predictions/'):
     predictions = self.predict(X)
     predictions.columns = ['HOME_WINS', 'DRAW', 'AWAY_WINS']
     predictions.index = X.index
     submission = predictions.reset_index()
-    submission.to_csv(f'{root_path}/data/predictions/{self.name}.csv', index=False)
+    submission.to_csv(f'{root_path}{self.name}.csv', index=False)
+  def save_proba(self, X, root_path='../data/train/'):
+    predictions = self.predict_proba(X)
+    predictions.columns = ['HOME_WINS', 'DRAW', 'AWAY_WINS']
+    predictions.index = X.index
+    submission = predictions.reset_index()
+    submission.to_csv(f'{root_path}{self.name}.csv', index=False)
   def get_feature_importances(self):
     logging.info(f'Model.get_feature_importances ....')
     pass
   def format_x(self, x):
-    return x.replace({0:numpy.nan})
+    return x.fillna(0)
   def format_y(self, y):
     z = y.copy()
     z['target'] = (z['HOME_WINS'] * 0 + z['DRAW'] * 1 + z['AWAY_WINS'] * 2).astype('category')

@@ -8,6 +8,26 @@ xgb_gblinear:
     objective: "multi:softprob"
     num_class: 2
     eval_metric: mlogloss
+xgb_gbtree:
+  class: models.xgboost_model.XgboostModel
+  params:
+    booster: gbtree
+    tree_method: hist
+    max_depth: 8 
+    learning_rate: 0.025
+    objective: "multi:softprob"
+    num_class: 2
+    eval_metric: mlogloss
+# xgb_dart:
+#   class: models.xgboost_model.XgboostModel
+#   params:
+#     booster: dart
+#     tree_method: hist
+#     max_depth: 8 
+#     learning_rate: 0.025
+#     objective: "multi:softprob"
+#     num_class: 2
+#     eval_metric: mlogloss
 xgb_classifier:
   class: models.xgboost_classifier_model.XgboostClassifierModel
   params:
@@ -47,22 +67,22 @@ extra_trees:
   class: models.sklearn_model.SklearnModel
   params:
     class_name: sklearn.ensemble.ExtraTreesClassifier
-# decision_tree:
-#   class: models.sklearn_model.SklearnModel
-#   params:
-#     class_name: sklearn.tree.DecisionTreeClassifier
+decision_tree:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.tree.DecisionTreeClassifier
 hist_gradient_boosting:
   class: models.sklearn_model.SklearnModel
   params:
     class_name: sklearn.ensemble.HistGradientBoostingClassifier
-# mlp:
-#   class: models.sklearn_model.SklearnModel
-#   params:
-#     class_name: sklearn.neural_network.MLPClassifier
-# kneighbors:
-#   class: models.sklearn_model.SklearnModel
-#   params:
-#     class_name: sklearn.neighbors.KNeighborsClassifier
+mlp:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.neural_network.MLPClassifier
+kneighbors:
+  class: models.sklearn_model.SklearnModel
+  params:
+    class_name: sklearn.neighbors.KNeighborsClassifier
 lightgbm:
   class: models.lightgbm_model.LightgbmModel
   params:
@@ -95,23 +115,6 @@ keras_relu_1:
   params:
     layers:
       - {'activation': 'relu', 'units': 10}
-keras_relu_13:
-  class: models.keras_model.KerasModel
-  params:
-    layers:
-      - {'activation': 'relu', 'units': 15}
-keras_relu_15:
-  class: models.keras_model.KerasModel
-  params:
-    layers:
-      - {'activation': 'sigmoid', 'units': 15}
-      - {'activation': 'relu', 'units': 15}
-      - {'activation': 'relu', 'units': 15}
-      - {'activation': 'softmax', 'units': 15}
-      - {'activation': 'relu', 'units': 15}
-      - {'activation': 'relu', 'units': 15}
-      - {'activation': 'relu', 'units': 15}
-
 # sigmoid
 # softmax
 # softplus
