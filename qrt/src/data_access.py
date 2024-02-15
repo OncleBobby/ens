@@ -4,12 +4,12 @@ from sklearn import model_selection
 root_path = '..'
 
 def read_statistics(name, type):
-    return pandas.read_csv(f'{root_path}/data/{type}_Data/{type}_{name}_statistics_df.csv', index_col=0, encoding='latin-1')
+    return pandas.read_csv(f'{root_path}/data/input/{type}_Data/{type}_{name}_statistics_df.csv', index_col=0, encoding='latin-1')
 def get_X(name):
     return get_X_2(name)
 def get_y(name='train'):
     train_data = get_X(name)
-    train_scores = pandas.read_csv(f'{root_path}/data/Y_train_1rknArQ.csv', index_col=0, encoding='latin-1')
+    train_scores = pandas.read_csv(f'{root_path}/data/input/Y_train_1rknArQ.csv', index_col=0, encoding='latin-1')
     train_scores = train_scores.loc[train_data.index]
     return train_scores
 def get_train_test(train_size=0.8, random_state=42):

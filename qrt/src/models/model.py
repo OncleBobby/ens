@@ -18,13 +18,13 @@ class Model:
     predictions = self.predict(X)
     target = self.train_scores.loc[X.index].copy()
     return numpy.round(accuracy_score(predictions, target), 4)
-  def save(self, X, root_path='../data/predictions/'):
+  def save(self, X, root_path='../data/output/predictions/'):
     predictions = self.predict(X)
     predictions.columns = ['HOME_WINS', 'DRAW', 'AWAY_WINS']
     predictions.index = X.index
     submission = predictions.reset_index()
     submission.to_csv(f'{root_path}{self.name}.csv', index=False)
-  def save_proba(self, X, root_path='../data/train/'):
+  def save_proba(self, X, root_path='../data/output/mix/train/'):
     predictions = self.predict_proba(X)
     predictions.columns = ['HOME_WINS', 'DRAW', 'AWAY_WINS']
     predictions.index = X.index
