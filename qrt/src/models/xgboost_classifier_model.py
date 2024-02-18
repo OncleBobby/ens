@@ -35,23 +35,7 @@ class XgboostClassifierModel(Model):
     predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
     return pandas.DataFrame(predictions)
   def get_feature_importances(self):
-    logging.info(f'SklearnModel.get_feature_importances ....')
     feature_names = [self.X_train.columns[i] for i in range(self.X_train.shape[1])]
-
-
-    logging.info(f'feature_importances_={dir(self.model)}')
-
-    logging.info(f'feature_importances_={self.model.feature_importances_}')
-    logging.info(f'feature_names_in_={self.model.feature_names_in_}')
-    logging.info(f'feature_types={self.model.feature_types}')
-    logging.info(f'importance_type={self.model.importance_type}')
-    logging.info(f'base_score={self.model.base_score}')
-    logging.info(f'best_iteration={self.model.best_iteration}')
-    logging.info(f'best_score={self.model.best_score}')
-    logging.info(f'best_iteration={self.model.best_iteration}')
-    logging.info(f'best_iteration={self.model.best_iteration}')
-    logging.info(f'best_iteration={self.model.best_iteration}')
-
     df_importances = pandas.DataFrame({'feature': feature_names, 'importance': self.model.feature_importances_})
     return df_importances.sort_values(by=['importance'], ascending=False)
   

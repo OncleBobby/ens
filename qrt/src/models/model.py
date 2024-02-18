@@ -31,7 +31,6 @@ class Model:
     submission = predictions.reset_index()
     submission.to_csv(f'{root_path}{self.name}.csv', index=False)
   def get_feature_importances(self):
-    logging.info(f'Model.get_feature_importances ....')
     pass
   def format_x(self, x):
     return x.fillna(0)

@@ -24,7 +24,6 @@ class LightgbmModel(Model):
     predictions = (predictions.reindex(columns=[0,1,2]).rank(1,ascending=False)==1).astype(int).values
     return pandas.DataFrame(predictions)
   def get_feature_importances(self):
-    logging.info(f'SklearnModel.get_feature_importances ....')
     feature_names = [self.X_train.columns[i] for i in range(self.X_train.shape[1])]
     df_importances = pandas.DataFrame({'feature': feature_names, 'importance': self.model.feature_importances_})
     return df_importances.sort_values(by=['importance'], ascending=False)
