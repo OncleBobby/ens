@@ -10,7 +10,6 @@ class LightgbmModel(Model):
     params = self.params.copy()
     return lightgbm.LGBMClassifier(**params)
   def fit(self):
-    params = self.params.copy()
     train_size=0.8
     random_state=42
     y_train = self.format_y(self.y_train)
