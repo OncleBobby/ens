@@ -21,7 +21,9 @@ class SklearnModel(Model):
     module_path = '.'.join(s[:-1])
     class_name = s[-1]
     module = import_module(module_path)
-    return getattr(module, class_name)()
+    params = self.params.copy()
+    params.pop('class_name')
+    return getattr(module, class_name)(**params)
   def get_feature_importances(self):
     feature_names = [self.X_train.columns[i] for i in range(self.X_train.shape[1])]
     df_importances = pandas.DataFrame({'feature': feature_names, 'importance': self.model.feature_importances_})
