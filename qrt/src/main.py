@@ -30,8 +30,9 @@ def evalute_models(X_train, y_train, X_test):
     df = df.sort_values(by=['score'], ascending=False)
 
 data_access.root_path = root_path
-train_data = get_X('train')
-train_scores = get_y('train')
-test_data = get_X('test')
+type='team'
+train_data = get_X('train', type)
+train_scores = get_y('train', type)
+test_data = get_X('test', type)
 X_train, y_train, X_test, y_test, target = get_train_test(train_size=0.8, random_state=42)
 evalute_models(X_train, y_train, X_test)
