@@ -1,4 +1,4 @@
-import pandas, numpy, logging
+import pandas, numpy
 from sklearn import model_selection
 
 root_path = '..'
@@ -11,10 +11,7 @@ def get_X(name, type='team'):
     columns = list(home.columns)
     for column in ['LEAGUE', 'POSITION', 'TEAM_NAME', 'PLAYER_NAME']:
         if column in columns: columns.remove(column)
-    logging.info(f'get_X - type={type}')
     if type == 'player':
-        logging.info(f'group by type={type}')
-
         home = home.groupby(by=["ID"]).sum()
         away = away.groupby(by=["ID"]).sum()
     home = home[columns]
@@ -22,7 +19,6 @@ def get_X(name, type='team'):
     data =  home.iloc[:,2:] + away.iloc[:,2:] * -1
     return data
 def get_train_test(train_size=0.8, random_state=42, type='team'):
-    logging.info(f'get_train_test - type={type}')
     train_data = get_X('train', type)
     train_scores = get_y('train', type)
     train_new_y = train_scores[['HOME_WINS', 'DRAW', 'AWAY_WINS']]
