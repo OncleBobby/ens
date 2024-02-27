@@ -6,18 +6,18 @@ xgb_gblinear:
     max_depth: 8 
     learning_rate: 0.025
     objective: "multi:softprob"
-    num_class: 2
+    num_class: 3
     eval_metric: mlogloss
-xgb_gbtree:
-  class: models.xgboost_model.XgboostModel
-  params:
-    booster: gbtree
-    tree_method: hist
-    max_depth: 8 
-    learning_rate: 0.025
-    objective: "multi:softprob"
-    num_class: 2
-    eval_metric: mlogloss
+# xgb_gbtree:
+#   class: models.xgboost_model.XgboostModel
+#   params:
+#     booster: gbtree
+#     tree_method: hist
+#     max_depth: 8 
+#     learning_rate: 0.025
+#     objective: "multi:softprob"
+#     num_class: 2
+#     eval_metric: mlogloss
 # xgb_dart:
 #   class: models.xgboost_model.XgboostModel
 #   params:
@@ -36,7 +36,7 @@ xgb_classifier:
     max_depth: 8 
     learning_rate: 0.025
     objective: "multi:softprob"
-    num_class: 2
+    num_class: 3
     eval_metric: mlogloss
 catboost:
   class: models.catboost_model.CatBoostModel
@@ -111,11 +111,11 @@ lightgbm:
     # eval_metric: mlogloss
     # objective: 'multiclass'
     # num_classes: 3
-keras_relu_1:
-  class: models.keras_model.KerasModel
-  params:
-    layers:
-      - {'activation': 'relu', 'units': 10}
+# keras_relu_1:
+#   class: models.keras_model.KerasModel
+#   params:
+#     layers:
+#       - {'activation': 'relu', 'units': 10}
 # sigmoid
 # softmax
 # softplus

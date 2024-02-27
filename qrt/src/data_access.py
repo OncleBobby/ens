@@ -6,18 +6,11 @@ root_path = '..'
 def read_statistics(name, type, way):
     return pandas.read_csv(f'{root_path}/data/input/statistics/{name}_{way}_{type}_statistics_df.csv', index_col=0, encoding='latin-1')
 def get_X(name, type='team'):
-    home = read_statistics(name, type, 'home', ).replace({numpy.inf:numpy.nan, -numpy.inf:numpy.nan})
-    away = read_statistics(name, type, 'away').replace({numpy.inf:numpy.nan, -numpy.inf:numpy.nan})
-    columns = list(home.columns)
-    for column in ['LEAGUE', 'POSITION', 'TEAM_NAME', 'PLAYER_NAME']:
-        if column in columns: columns.remove(column)
-    if type == 'player':
-        home = home.groupby(by=["ID"]).sum()
-        away = away.groupby(by=["ID"]).sum()
-    home = home[columns]
-    away = away[columns]
-    data =  home.iloc[:,2:] + away.iloc[:,2:] * -1
-    return data
+    if type != 'mix':
+        return _get_X(name, type)
+    team=get_X(name, 'team')
+    player=get_X(name, 'player')
+    return pandas.concat([team, player], axis=1, join="inner")
 def get_train_test(train_size=0.8, random_state=42, type='team'):
     train_data = get_X('train', type)
     train_scores = get_y('train', type)
@@ -30,3 +23,16 @@ def get_y(name='train', type='team'):
     train_scores = pandas.read_csv(f'{root_path}/data/input/Y_train_1rknArQ.csv', index_col=0, encoding='latin-1')
     train_scores = train_scores.loc[train_data.index]
     return train_scores
+def _get_X(name, type):
+    home = read_statistics(name, type, 'home').replace({numpy.inf:numpy.nan, -numpy.inf:numpy.nan})
+    away = read_statistics(name, type, 'away').replace({numpy.inf:numpy.nan, -numpy.inf:numpy.nan})
+    columns = list(home.columns)
+    for column in ['LEAGUE', 'POSITION', 'TEAM_NAME', 'PLAYER_NAME']:
+        if column in columns: columns.remove(column)
+    if type == 'player':
+        home = home.groupby(by=["ID"]).sum()
+        away = away.groupby(by=["ID"]).sum()
+    home = home[columns]
+    away = away[columns]
+    data =  home.iloc[:,2:] + away.iloc[:,2:] * -1
+    return data
